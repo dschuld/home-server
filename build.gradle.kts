@@ -14,6 +14,17 @@ repositories {
     mavenCentral()
 }
 
+tasks.jar {
+    manifest {
+        attributes(
+            mapOf(
+                "Main-Class" to "net.davidschuld.homeserver.lights.MainKt",
+                "Class-Path" to configurations.runtimeClasspath.get().files.joinToString(" ") { it.name }
+            )
+        )
+    }
+}
+
 dependencies {
     implementation("io.ktor:ktor-server-core:1.6.3")
     implementation("io.ktor:ktor-server-netty:1.6.3")
