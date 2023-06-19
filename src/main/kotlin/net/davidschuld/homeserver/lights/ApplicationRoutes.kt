@@ -8,6 +8,7 @@ import io.ktor.routing.*
 
 fun Application.countdownRouting() {
     val countdown = Countdown()
+    val redAlert = RedAlert()
 
     routing {
         route("/lights/countdown") {
@@ -17,6 +18,16 @@ fun Application.countdownRouting() {
             }
             post("/stop") {
                 countdown.stop()
+                call.respond(HttpStatusCode.OK)
+            }
+        }
+        route("red_alert") {
+            post("/start") {
+                redAlert.start()
+                call.respond(HttpStatusCode.OK)
+            }
+            post("/stop") {
+                redAlert.stop()
                 call.respond(HttpStatusCode.OK)
             }
         }
