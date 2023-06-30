@@ -33,6 +33,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:1.6.3")
     testImplementation("io.ktor:ktor-server-tests:1.6.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("io.ktor:ktor-network-tls-certificates:1.6.3")
 }
 
 

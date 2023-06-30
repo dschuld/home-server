@@ -5,9 +5,7 @@ import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
-fun main() {
-    embeddedServer(Netty, port = 7077, module = Application::module).start(wait = true)
-}
+fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
     routing {
