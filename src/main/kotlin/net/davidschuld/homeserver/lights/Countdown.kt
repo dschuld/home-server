@@ -16,7 +16,7 @@ class Countdown : CoroutineScope by CoroutineScope(Dispatchers.IO) {
     private var job: Job? = null
 
     fun start() {
-        println("Starting countdown...")
+        println("Starting countdown")
         job?.cancel()
         job = launch {
             delay(10 * 60 * 1000)
