@@ -10,6 +10,7 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
     private val serviceUrl = System.getenv("BRIDGE_URL")
 
     fun start() {
+        println("Red Alert not implemented yet")
         // launch an external tool via command line
 
         // send API call to hue bridge to start red lights
