@@ -28,7 +28,7 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
                 contentType(ContentType.Application.Json)
                 body = """{ "on": false }"""
             }
-            val audio = async { playMp3("tng_red_alert1.mp3") }
+            val audio = async { playMp3("/app/tng_red_alert1.mp3") }
             val lights = async { flashOnce() }
             audio.await() to lights.await()
             httpClient.put<Unit>("$serviceUrl/groups/1/action") {
@@ -43,10 +43,10 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     private suspend fun playMp3(fileName: String) {
         println("Playing $fileName")
-        val classLoader = Thread.currentThread().contextClassLoader
-        val resource = classLoader.getResource(fileName)
-        if (resource != null) {
-            val processBuilder = ProcessBuilder("mpg123", resource.path)
+//        val classLoader = Thread.currentThread().contextClassLoader
+//        val resource = classLoader.getResource(fileName)
+//        if (resource != null) {
+            val processBuilder = ProcessBuilder("mpg123", fileName)
 
             // you may also need to adjust the working directory if mpg123 doesn't recognize the path
             processBuilder.directory(File(System.getProperty("user.dir")))
@@ -73,9 +73,9 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
                 println("An error occurred while trying to play the file $fileName")
                 e.printStackTrace()
             }
-        } else {
-            println("The file $fileName does not exist")
-        }
+//        } else {
+//            println("The file $fileName does not exist")
+//        }
     }
 
     private suspend fun flashOnce() {
