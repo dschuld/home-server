@@ -10,7 +10,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
 
 class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
     private val httpClient = HttpClient { }
@@ -39,7 +41,7 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
         }
     }
 
-    private fun playMp3(fileName: String) {
+    private suspend fun playMp3(fileName: String) {
         println("Playing $fileName")
         val classLoader = Thread.currentThread().contextClassLoader
         val resource = classLoader.getResource(fileName)
@@ -51,6 +53,20 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
             try {
                 val process = processBuilder.start()
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
+                val errorReader = BufferedReader(InputStreamReader(process.errorStream))
+                coroutineScope {
+                    launch {
+                        reader.lines().forEach {
+                            println(it)
+                        }
+                    }
+                    launch {
+                        errorReader.lines().forEach {
+                            println(it)
+                        }
+                    }
+                }
                 val exitCode = process.waitFor()
                 println("Exited with code $exitCode")
             } catch (e: Exception) {
