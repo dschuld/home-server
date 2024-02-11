@@ -18,6 +18,8 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
         val task = object : TimerTask() {
             override fun run() {
                 launch {
+
+                    println("Running shopping list update task")
                     val bodyContent = body("milk", "eggs", "schoki", "hummus")
                     val headers = mapOf(
                         "Content-Type" to "application/json",
@@ -37,11 +39,13 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
             }
         }
 
+        println("Scheduling shopping list update task")
+
         // Set the schedule function
         val calendar = Calendar.getInstance().apply {
             set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
             set(Calendar.HOUR_OF_DAY, 20)
-            set(Calendar.MINUTE, 0)
+            set(Calendar.MINUTE, 30)
             set(Calendar.SECOND, 0)
         }
 
