@@ -7,6 +7,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -20,7 +21,7 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
                 launch {
 
                     println("Running shopping list update task")
-                    val bodyContent = body("milk", "eggs", "schoki", "hummus")
+                    val bodyContent = body()
                     val headers = mapOf(
                         "Content-Type" to "application/json",
                         "Notion-Version" to "2022-06-28",
@@ -43,9 +44,9 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
         // Set the schedule function
         val calendar = Calendar.getInstance().apply {
-            set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
-            set(Calendar.HOUR_OF_DAY, 9)
-            set(Calendar.MINUTE, 0)
+            set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)
+            set(Calendar.HOUR_OF_DAY, 12)
+            set(Calendar.MINUTE, 5)
             set(Calendar.SECOND, 0)
         }
 
@@ -58,18 +59,12 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
         timer.schedule(task, calendar.time, TimeUnit.DAYS.toMillis(7))
     }
 
-}
-
-
-val NOTION_API_KEY = System.getenv("NOTION_API_KEY")
-val SHOPPING_LIST_ID = System.getenv("SHOPPING_LIST_ID")
-
-
-val NOTION_BLOCK_ENDPOINT = "https://api.notion.com/v1/blocks/$SHOPPING_LIST_ID/children"
-
-
-fun body(vararg items: String) =
-    """
+    fun body(): String {
+        val filePath = "/data/shopping_list"
+        val defaultFilePath = this::class.java.getResource("/shopping_list_default").file
+        val file = if (File(filePath).exists()) File(filePath) else File(defaultFilePath)
+        val items = file.readText().split(",")
+        return """
     {
         "children": [
             {
@@ -90,3 +85,12 @@ fun body(vararg items: String) =
         ]
     }
     """
+    }
+}
+
+
+val NOTION_API_KEY = System.getenv("NOTION_API_KEY")
+val SHOPPING_LIST_ID = System.getenv("SHOPPING_LIST_ID")
+
+
+val NOTION_BLOCK_ENDPOINT = "https://api.notion.com/v1/blocks/$SHOPPING_LIST_ID/children"
