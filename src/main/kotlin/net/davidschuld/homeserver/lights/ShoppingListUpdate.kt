@@ -44,9 +44,9 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
         // Set the schedule function
         val calendar = Calendar.getInstance().apply {
-            set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)
-            set(Calendar.HOUR_OF_DAY, 12)
-            set(Calendar.MINUTE, 5)
+            set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY)
+            set(Calendar.HOUR_OF_DAY, 6)
+            set(Calendar.MINUTE, 35)
             set(Calendar.SECOND, 0)
         }
 
