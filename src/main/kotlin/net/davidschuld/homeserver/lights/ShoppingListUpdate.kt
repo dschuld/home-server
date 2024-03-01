@@ -46,7 +46,7 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
         val calendar = Calendar.getInstance().apply {
             set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY)
             set(Calendar.HOUR_OF_DAY, 6)
-            set(Calendar.MINUTE, 35)
+            set(Calendar.MINUTE, 52)
             set(Calendar.SECOND, 0)
         }
 
@@ -61,30 +61,34 @@ class ShoppingListUpdate : CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     fun body(): String {
         val filePath = "/data/shopping_list"
-        val defaultFilePath = this::class.java.getResource("/shopping_list_default").file
-        val file = if (File(filePath).exists()) File(filePath) else File(defaultFilePath)
-        val items = file.readText().split(",")
+        val defaultFilePath = "/shopping_list_default"
+        val fileContent = if (File(filePath).exists()) {
+            File(filePath).readText()
+        } else {
+            this::class.java.getResourceAsStream(defaultFilePath).bufferedReader().use { it.readText() }
+        }
+        val items = fileContent.split(",")
         return """
-    {
-        "children": [
-            {
-                "object": "block",
-                "type": "paragraph",
-                "paragraph": {
-                    "rich_text": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "content": "${items.joinToString("\\n")}",
-                                "link": null
-                            }
+{
+    "children": [
+        {
+            "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "${items.joinToString("\\n")}",
+                            "link": null
                         }
-                    ]
-                }
+                    }
+                ]
             }
-        ]
-    }
-    """
+        }
+    ]
+}
+"""
     }
 }
 
