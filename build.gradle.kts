@@ -5,6 +5,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.franzbecker.gradle-lombok") version "5.0.0"
     id("com.avast.gradle.docker-compose") version "0.16.12"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 }
 
 group = "net.davidschuld"
@@ -26,6 +27,7 @@ tasks.jar {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("io.ktor:ktor-server-core:1.6.3")
     implementation("io.ktor:ktor-server-netty:1.6.3")
     implementation("ch.qos.logback:logback-classic:1.2.3")
