@@ -41,43 +41,6 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
         }
     }
 
-    private suspend fun playMp3(fileName: String) {
-        println("Playing $fileName")
-//        val classLoader = Thread.currentThread().contextClassLoader
-//        val resource = classLoader.getResource(fileName)
-//        if (resource != null) {
-            val processBuilder = ProcessBuilder("mpg123", fileName)
-
-            // you may also need to adjust the working directory if mpg123 doesn't recognize the path
-            processBuilder.directory(File(System.getProperty("user.dir")))
-
-            try {
-                val process = processBuilder.start()
-                val reader = BufferedReader(InputStreamReader(process.inputStream))
-                val errorReader = BufferedReader(InputStreamReader(process.errorStream))
-                coroutineScope {
-                    launch {
-                        reader.lines().forEach {
-                            println(it)
-                        }
-                    }
-                    launch {
-                        errorReader.lines().forEach {
-                            println(it)
-                        }
-                    }
-                }
-                val exitCode = process.waitFor()
-                println("Exited with code $exitCode")
-            } catch (e: Exception) {
-                println("An error occurred while trying to play the file $fileName")
-                e.printStackTrace()
-            }
-//        } else {
-//            println("The file $fileName does not exist")
-//        }
-    }
-
     private suspend fun flashOnce() {
         println("Flashing lights")
         //TODO why does this not work when it works in Postman with Alert Lightstrip

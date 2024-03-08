@@ -11,5 +11,6 @@ fun Application.module() {
     routing {
         countdownRouting()
         ShoppingListUpdate().start()
+        Pausengong().start()
     }
 }
