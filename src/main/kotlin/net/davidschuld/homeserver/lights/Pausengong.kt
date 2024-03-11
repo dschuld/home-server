@@ -7,7 +7,7 @@ class Pausengong: TaskRunner() {
 
         val calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 8)
-            set(Calendar.MINUTE, 20)
+            set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }
 

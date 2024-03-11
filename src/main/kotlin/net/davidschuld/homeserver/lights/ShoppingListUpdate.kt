@@ -38,7 +38,6 @@ open class TaskRunner : CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
                 // Check if the current day is a weekday and the current hour is between 9 am and 5 pm
                 if (currentDay in Calendar.MONDAY..Calendar.FRIDAY && currentHour in 9..17) {
-                    println("Running pausengong task")
                     launch(block = block)
                 }
             }
