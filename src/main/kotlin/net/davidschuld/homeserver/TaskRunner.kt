@@ -1,5 +1,7 @@
 package net.davidschuld.homeserver
 
+import com.typesafe.config.Config
+import com.typesafe.config.ConfigFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,4 +47,31 @@ open class TaskRunner : CoroutineScope by CoroutineScope(Dispatchers.IO) {
             }
         }, calendar.time, TimeUnit.HOURS.toMillis(1)) // Run the task every hour
     }
+}
+
+
+
+fun readConfFile(filePath: String): Config {
+    val inputStream = TaskRunner::class.java.getResourceAsStream(filePath)
+    return ConfigFactory.parseReader(inputStream.bufferedReader())
+}
+
+const val TASK_CONFIG_PATH = "/tasks.conf"
+val config = readConfFile(TASK_CONFIG_PATH)
+
+object taskConfig: Config by config{
+
+    fun getDay(key: String): Int {
+        return when (config.getString(key)) {
+            "MONDAY" -> Calendar.MONDAY
+            "TUESDAY" -> Calendar.TUESDAY
+            "WEDNESDAY" -> Calendar.WEDNESDAY
+            "THURSDAY" -> Calendar.THURSDAY
+            "FRIDAY" -> Calendar.FRIDAY
+            "SATURDAY" -> Calendar.SATURDAY
+            "SUNDAY" -> Calendar.SUNDAY
+            else -> throw IllegalArgumentException("Invalid day")
+        }
+    }
+
 }
