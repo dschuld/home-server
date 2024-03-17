@@ -4,46 +4,13 @@ package net.davidschuld.homeserver.lights
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
 import java.util.*
-import java.util.concurrent.TimeUnit
 
-
-open class TaskRunner : CoroutineScope by CoroutineScope(Dispatchers.IO) {
-    fun schedule(calendar: Calendar, block: suspend CoroutineScope.() -> Unit) {
-        val timer = Timer()
-        val task = object : TimerTask() {
-            override fun run() {
-                launch(block = block)
-            }
-        }
-
-        // Schedule the task
-        timer.schedule(task, calendar.time, TimeUnit.DAYS.toMillis(7))
-    }
-
-    fun scheduleAtFixedRate(calendar: Calendar, block: suspend CoroutineScope.() -> Unit) {
-        val timer = Timer()
-        timer.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-                val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-
-                // Check if the current day is a weekday and the current hour is between 9 am and 5 pm
-                if (currentDay in Calendar.MONDAY..Calendar.FRIDAY && currentHour in 9..17) {
-                    launch(block = block)
-                }
-            }
-        }, calendar.time, TimeUnit.HOURS.toMillis(1)) // Run the task every hour
-    }
-}
 
 class ShoppingListUpdate : TaskRunner() {
 
@@ -61,7 +28,7 @@ class ShoppingListUpdate : TaskRunner() {
         if (calendar.time < Date()) {
             calendar.add(Calendar.DAY_OF_YEAR, 7)
         }
-        
+
         schedule(calendar) {
 
             println("Running shopping list update task")
