@@ -19,8 +19,8 @@ class ShoppingListUpdate : TaskRunner() {
 
         val calendar = Calendar.getInstance().apply {
             set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY)
-            set(Calendar.HOUR_OF_DAY, 9)
-            set(Calendar.MINUTE, 37)
+            set(Calendar.HOUR_OF_DAY, 17)
+            set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }
 
