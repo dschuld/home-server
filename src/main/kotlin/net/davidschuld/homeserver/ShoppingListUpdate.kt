@@ -1,4 +1,4 @@
-package net.davidschuld.homeserver.lights
+package net.davidschuld.homeserver
 
 
 import io.ktor.client.*
