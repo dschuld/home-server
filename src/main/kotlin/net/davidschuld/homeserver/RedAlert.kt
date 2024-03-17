@@ -16,7 +16,6 @@ import java.io.InputStreamReader
 
 class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
     private val httpClient = HttpClient { }
-    private val serviceUrl = System.getenv("BRIDGE_URL")
 
     fun start() {
         // launch an external tool via command line
@@ -24,14 +23,14 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
         // send API call to hue bridge to start red lights
         println("Sending LIGHTS OFF to living room")
         launch {
-            httpClient.put<Unit>("$serviceUrl/groups/1/action") {
+            httpClient.put<Unit>("$BRIDGE_URL/groups/1/action") {
                 contentType(ContentType.Application.Json)
                 body = """{ "on": false }"""
             }
             val audio = async { playMp3("/app/tng_red_alert1.mp3") }
             val lights = async { flashOnce() }
             audio.await() to lights.await()
-            httpClient.put<Unit>("$serviceUrl/groups/1/action") {
+            httpClient.put<Unit>("$BRIDGE_URL/groups/1/action") {
                 contentType(ContentType.Application.Json)
                 body = """{ "on": false }"""
             }
@@ -44,7 +43,7 @@ class RedAlert : CoroutineScope by CoroutineScope(Dispatchers.IO) {
     private suspend fun flashOnce() {
         println("Flashing lights")
         //TODO why does this not work when it works in Postman with Alert Lightstrip
-        httpClient.put<Unit>("$serviceUrl/lights/8/state") {
+        httpClient.put<Unit>("$BRIDGE_URL/lights/8/state") {
             contentType(ContentType.Application.Json)
             body = requestBody(true)
         }

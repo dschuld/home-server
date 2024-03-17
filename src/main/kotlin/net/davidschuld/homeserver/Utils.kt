@@ -6,6 +6,9 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
+
+val BRIDGE_URL = System.getenv("BRIDGE_URL")
+
 suspend fun playMp3(fileName: String) {
     println("Playing $fileName")
     val processBuilder = ProcessBuilder("mpg123", fileName)

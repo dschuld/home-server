@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 
 class Countdown : CoroutineScope by CoroutineScope(Dispatchers.IO) {
     private val httpClient = HttpClient { }
-    private val serviceUrl = System.getenv("BRIDGE_URL")
     private var job: Job? = null
 
     fun start() {
@@ -21,7 +20,7 @@ class Countdown : CoroutineScope by CoroutineScope(Dispatchers.IO) {
         job = launch {
             delay(10 * 60 * 1000)
             println("Sending LIGHTS OFF")
-            httpClient.put<Unit>("$serviceUrl/groups/0/action") {
+            httpClient.put<Unit>("$BRIDGE_URL/groups/0/action") {
                 contentType(ContentType.Application.Json)
                 body = """{ "on": false }"""
             }
