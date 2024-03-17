@@ -19,7 +19,7 @@ tasks.jar {
     manifest {
         attributes(
             mapOf(
-                "Main-Class" to "net.davidschuld.homeserver.lights.MainKt",
+                "Main-Class" to "net.davidschuld.homeserver.MainKt",
                 "Class-Path" to configurations.runtimeClasspath.get().files.joinToString(" ") { it.name }
             )
         )
