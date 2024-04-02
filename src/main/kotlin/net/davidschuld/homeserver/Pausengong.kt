@@ -1,8 +1,13 @@
 package net.davidschuld.homeserver
 
+import mu.KLogger
+import mu.KotlinLogging
+
 class Pausengong : TaskRunner() {
 
     fun start() {
+
+        KotlinLogging.logger("Pausengong").info { "Starting pausengong task" }
 
 
         val startDay = taskConfig.getDay("tasks.pausengong.start_day")
