@@ -38,6 +38,7 @@ dependencies {
     implementation("io.ktor:ktor-network-tls-certificates:1.6.3")
     implementation("com.typesafe:config:1.4.1")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
+    implementation("ch.qos.logback:logback-classic:1.4.14")
 }
 
 
