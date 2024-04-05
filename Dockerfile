@@ -1,4 +1,6 @@
 FROM openjdk:17-jdk-slim
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y mpg123
