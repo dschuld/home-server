@@ -23,7 +23,7 @@ class EmailFetcher(private val gmailService: GmailService) : TaskRunner() {
                 fetchRecentEmailsWithAttachments()
             }
         }
-        timer.scheduleAtFixedRate(task, 0, 30000)
+        timer.scheduleAtFixedRate(task, 0, 3600000)
     }
 
     fun fetchRecentEmailsWithAttachments() {
