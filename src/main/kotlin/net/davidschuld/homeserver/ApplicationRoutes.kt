@@ -5,8 +5,10 @@ import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import net.davidschuld.homeserver.modules.misc.Countdown
+import net.davidschuld.homeserver.modules.misc.RedAlert
 
-fun Application.countdownRouting() {
+fun Application.configureRoutes() {
     val countdown = Countdown()
     val redAlert = RedAlert()
 

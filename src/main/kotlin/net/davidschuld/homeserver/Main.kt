@@ -1,22 +1,24 @@
 package net.davidschuld.homeserver
 
-import com.typesafe.config.Config
 import io.ktor.application.*
 import io.ktor.routing.*
 import io.ktor.server.netty.*
-import java.io.File
-import java.util.*
-import com.typesafe.config.ConfigFactory
+import net.davidschuld.homeserver.modules.mail.EmailFetcher
+import net.davidschuld.homeserver.modules.mail.GmailService
+import net.davidschuld.homeserver.modules.misc.Pausengong
+import net.davidschuld.homeserver.modules.misc.ShoppingListUpdate
 
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
+    println("Starting homeserver...")
     routing {
-        countdownRouting()
+        configureRoutes()
     }
     ShoppingListUpdate().start()
     Pausengong().start()
+    EmailFetcher(GmailService()).start()
 }
 
 

@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-open class TaskRunner : CoroutineScope by CoroutineScope(Dispatchers.IO) {
+abstract class TaskRunner : CoroutineScope by CoroutineScope(Dispatchers.IO) {
+
+    abstract fun start()
     fun schedule(calendar: Calendar, block: suspend CoroutineScope.() -> Unit) {
         val timer = Timer()
         val task = object : TimerTask() {

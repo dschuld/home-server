@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "2.0.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.franzbecker.gradle-lombok") version "5.0.0"
     id("com.avast.gradle.docker-compose") version "0.16.12"
@@ -39,6 +39,15 @@ dependencies {
     implementation("com.typesafe:config:1.4.1")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("ch.qos.logback:logback-classic:1.4.14")
+    implementation("com.google.api-client:google-api-client:1.32.1")
+    implementation("com.google.oauth-client:google-oauth-client-jetty:1.32.1")
+    implementation("com.google.apis:google-api-services-gmail:v1-rev20220404-1.32.1")
+    implementation("com.google.auth:google-auth-library-credentials:1.27.0")
+    // https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.27.0")
+
+
+
 }
 
 
